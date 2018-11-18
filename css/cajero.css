@@ -1,0 +1,16 @@
+
+.juan-valdez-background {
+    background: #9d132c;
+}
+.juan-valdez-text-color, .juan-valdez-text-color span{
+    color: white;
+    
+}
+.juan-valdez-text-color a{
+    color: white;
+}
+.juan-valdez-list-group li a:hover{
+    padding: auto 0;
+    background: white;
+    color: black;
+}
