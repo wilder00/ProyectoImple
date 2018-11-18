@@ -12,7 +12,7 @@
 
         <div id="registro" style="display:none">
             <ul>
-                <li><a href="login.html">Intranet</a></li>
+                <li><a href="intranet/login.html">Intranet</a></li>
             </ul>
         </div>
         
