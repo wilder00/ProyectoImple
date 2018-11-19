@@ -11,10 +11,8 @@ function existeDni($id){
     echo '</div>';
 
     $rpta = oci_result($stid, 'EXISTE');
-    if($rpta = 1){
+    if($rpta == 1){
         $valor = true;
-    }else{
-        header('Location: Administrativo/administrativo.php');
     }
     
     oci_free_statement($stid);

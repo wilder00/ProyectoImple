@@ -2,11 +2,15 @@
 <?php
 /* Set oracle user login and password info */
 session_start();
-include "../funciones/funciones.php";
+
 $mensaje = "";
 $usuariomaster = "TODO"; //aqui debes poner el usuario master de la base de datos
 if(isset($_SESSION['Usuario'])){//si ya esta logeado
-	header('Location: ../Inicio.php');
+	if($_SESSION['tipo']=="Administrativo"){
+        header('Location: Administrativo/administrativo.php');
+    }elseif($_SESSION['tipo']=="Cajero"){
+		header('Location: Cajero/cajero.php');
+	}
 }
 
     if(isset($_POST['submit']) ){
@@ -26,7 +30,61 @@ if(isset($_SESSION['Usuario'])){//si ya esta logeado
 			  }else{
 				//header('Location: Cajero/cajero.php');
 					
-					$existe = existeDni($_POST['Id']);//es de una funcion
+					
+
+					$existe = false;
+					$stmt = oci_parse($conn, "select $usuariomaster.Existe_dni(:id) AS EXISTE FROM DUAL");
+					//echo "<script>alert( 'eso: '+ '$stmt');</script>";
+					oci_bind_by_name($stmt, ':id', $_POST['Id']);
+					oci_execute($stmt);
+
+					echo '<div style="display: none">';
+					oci_fetch($stmt);
+					echo '</div>';
+
+					$rpta = oci_result($stmt, 'EXISTE');
+					$a = $_SESSION["Usuario"].$_SESSION["Password"] = $_POST['Password'];
+					//echo "<script>alert( 'rpta: $a .......'+ '$rpta');</script>";
+					if($rpta == 1 || $rpta=="1"){
+						$existe = true;
+					}
+					
+					oci_free_statement($stmt);
+
+					
+
+
+
+/*
+					$sql = "Select $usuariomaster.Existe_dni(15632598) AS EXISTE FROM DUAL;";
+					$stid = oci_parse($conn, $sql);
+					//oci_bind_by_name($stid, ':id', $_POST['Id']);
+					// Las definiciones DEBEN realizarse antes de la ejecución
+					oci_define_by_name($stid, 'EXISTE',$rpta);
+					
+					//oci_execute($stid);
+					
+					// Cada obtención rellena las variables anteriormente definidas con los datos de la siguiente fila
+					while (oci_fetch($stid)) {
+						if($rpta == 1 || $rpta=="1"){
+							$existe = true;
+						}
+					}
+					
+					// Se muestra:
+					//   El id de ubicacion 1000 es Roma
+					//   El id de ubicacion 1100 es Venice
+					
+					oci_free_statement($stid);
+					oci_close($conn);
+
+*/
+
+
+
+
+
+
 
 					if($existe){
 							// Preparar la sentencia
@@ -66,19 +124,27 @@ if(isset($_SESSION['Usuario'])){//si ya esta logeado
 						*/
 						oci_fetch($stid);
 						$puesto = oci_result($stid, 'PUESTO');
-	
-						if($puesto == 'Cajero'){
+						echo "<script>alert('puesto: '+'$puesto');</script>";
+						oci_free_statement($stid);
+						if($puesto == "Cajero"){
+							$_SESSION['tipo'] = "Cajero";
 							header('Location: Cajero/cajero.php');
-						}elseif($puesto == 'Administrativo'){
+						}elseif($puesto == "Administrativo"){
+							$_SESSION['tipo'] = "Administrativo";
 							header('Location: Administrativo/administrativo.php');
 						}else{
+							
+							session_unset();
+							session_destroy();
 							header('Location: login.php');
 						}
+					}else{
+						$mensaje = '<div class="alert alert-danger" role="alert">
+						dni,usuario o contraseña incorrecta
+						</div>';
+						session_unset();
+						session_destroy();
 					}
-					$mensaje = '<div class="alert alert-danger" role="alert">
-					dni,usuario o contraseña incorrecta
-					</div>';
-					echo $mensaje;
 					
 	
 					
@@ -93,7 +159,9 @@ if(isset($_SESSION['Usuario'])){//si ya esta logeado
 		}else{
 			$mensaje = '<div class="alert alert-danger" role="alert">
 						todo los campos son requerido
-					  	</div>';
+						  </div>';
+			session_unset();
+			session_destroy();
 		}
 	}
 	

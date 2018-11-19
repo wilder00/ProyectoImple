@@ -2,6 +2,10 @@
 <?php
 session_start();
 if(isset($_SESSION['Usuario'])){
+    if($_SESSION['tipo']=="Administrativo"){
+        header('Location: ../Administrativo/administrativo.php');
+    }
+
 
 }else{
     header('Location: ../../Inicio.php');
