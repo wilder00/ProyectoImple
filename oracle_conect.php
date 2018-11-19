@@ -1,14 +1,23 @@
-<DOCTYPE HTML>
+<DOCTYPE! HTML>
 <meta charset = "utf8" />
 <?php  
 // crear conexion con oracle
-$conexion = oci_connect("hr", "hr", "localhost/xe"); 
- 
-if (!$conexion) {    
-  $m = oci_error();    
-  echo $m['message'], "n";    
-  exit; 
-} else {    
-  echo "Conexi�n con �xito a Oracle!"; } 
+
+
+try {
+  $usuario = $_SESSION["Usuario"];
+  $password = $_SESSION["Password"];
+  echo '<div style="display: none">';
+  $conn = oci_connect($usuario, $password, "localhost/XE");
+  echo '</div>';
+  
+} catch (Exception $e) {
+  echo 'Caught exception: ',  $e->getMessage(), "\n";
+  
+}
+
+
+
+
  
 ?>

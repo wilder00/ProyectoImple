@@ -1,3 +1,5 @@
+
+
 <nav class="navbar navbar-expand-lg juan-valdez-background juan-valdez-text-color ">
   <a class="navbar-brand" href="#"><img src="http://www.juanvaldezcafe.com/sites/all/themes/bootstrap/jv_col/logo.png" alt="Juan Valdez"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,8 +17,18 @@
         <a class="nav-link" href="#">Pricing</a>
       </li>
     </ul>
-    <span class="navbar-text">
-      Navbar text with an inline element
-    </span>
+    <?php if(isset($_SESSION['Usuario'])){//si ya esta logeado
+	        echo '<span class="navbar-text">
+            <a href="http://localhost/ProyectoImple/cerrarSesion.php">Cerrar Sesion</a>
+            </span>';
+          }else{
+            echo '<span class="navbar-text">
+            <a href="http://localhost/ProyectoImple/Intranet/login.php">Iniciar Sesion</a>
+            </span>';
+          }
+
+    ?>
+
+    
   </div>
 </nav>
