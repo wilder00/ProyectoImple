@@ -4,7 +4,7 @@
 session_start();
 
 $mensaje = "";
-$usuariomaster = "TODO"; //aqui debes poner el usuario master de la base de datos
+
 if(isset($_SESSION['Usuario'])){//si ya esta logeado
 	if($_SESSION['tipo']=="Administrativo"){
         header('Location: Administrativo/administrativo.php');
