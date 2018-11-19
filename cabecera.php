@@ -30,12 +30,20 @@
                   
                   ';
                 }else{
+					if($_SESSION['tipo']=="Administrativo"){
+					echo '
 
+					<li class="nav-item">
+					<a class="nav-link" href="http://localhost/ProyectoImple/Intranet/Aministrativo/ListaTrabajadores.php">Lista de Trabajadores</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link" href="http://localhost/ProyectoImple/Intranet/Aministrativo/RegistrarTrabajador.php">Registrar Trabajadores</a>
+					</li>
+                  
+					';
                 }
-          }else{
-
           }
-
+	  }
     ?>
 
 
