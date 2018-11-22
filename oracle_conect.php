@@ -2,7 +2,7 @@
 <meta charset = "utf8" />
 <?php  
 // crear conexion con oracle
-$usuariomaster = "TODO"; //aqui debes poner el usuario master de la base de datos
+$usuariomaster = "TODO2"; //aqui debes poner el usuario master de la base de datos
 
 try {
   $usuario = $_SESSION["Usuario"];

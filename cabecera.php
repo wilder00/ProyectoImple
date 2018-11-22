@@ -2,20 +2,20 @@
 
 <nav class="navbar navbar-expand-lg juan-valdez-background juan-valdez-text-color ">
   <div class="container pl-3 pr-3">
-  <a class="navbar-brand" href="#"><img src="http://www.juanvaldezcafe.com/sites/all/themes/bootstrap/jv_col/logo.png" alt="Juan Valdez"></a>
+  <a class="navbar-brand" href="http://localhost/ProyectoImple/Inicio.php"><img src="http://www.juanvaldezcafe.com/sites/all/themes/bootstrap/jv_col/logo.png" alt="Juan Valdez"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon ">↕</span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto juan-valdez-list-group">
-      <li class="nav-item active">
+      <!--<li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="#"></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="#"></a>
       </li>
       <?php if(isset($_SESSION['Usuario'])){//si ya esta logeado
                 if($_SESSION['tipo']=="Cajero"){
@@ -30,19 +30,19 @@
                   
                   ';
                 }else{
-					if($_SESSION['tipo']=="Administrativo"){
-					echo '
+                  if($_SESSION['tipo']=="Administrativo"){
+                    echo '
 
-					<li class="nav-item">
-					<a class="nav-link" href="http://localhost/ProyectoImple/Intranet/Aministrativo/ListaTrabajadores.php">Lista de Trabajadores</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link" href="http://localhost/ProyectoImple/Intranet/Aministrativo/RegistrarTrabajador.php">Registrar Trabajadores</a>
-					</li>
-                  
-					';
+                    <li class="nav-item">
+                    <a class="nav-link" href="http://localhost/proyectoImple/Intranet/Administrativo/ListaTrabajadores.php">Lista de Trabajadores</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="http://localhost/proyectoImple/Intranet/Administrativo/RegistrarTrabajador.php">Registrar Trabajadores</a>
+                    </li>
+                            
+                    ';
+                  }
                 }
-          }
 	  }
     ?>
 

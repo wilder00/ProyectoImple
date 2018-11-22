@@ -13,9 +13,9 @@ if(isset($_SESSION['Usuario'])){
     if(isset($_POST['submit'])){
         if(!empty($_POST['nombre']) && !empty($_POST['apel_mat']) &&  !empty($_POST['apel_pat']) && !empty($_POST['dni'])){
             $info = $_POST['fecha_nacimiento'];
-            echo "
+            /*echo "
                     <script>alert('feha: $info')</script>
-                ";
+                ";*/
             if(empty($_POST['telefono'])){
                 $_POST['telefono'] = null;
             }
@@ -170,7 +170,6 @@ if(isset($_SESSION['Usuario'])){
         </div>
     </div>
 </div>
-
 
 
 

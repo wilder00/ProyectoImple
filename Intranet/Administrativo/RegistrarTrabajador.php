@@ -10,31 +10,27 @@ if(isset($_SESSION['Usuario'])){
 
 
     if(isset($_POST['submit'])){
-        if(!empty($_POST['nombre']) && !empty($_POST['apel_mat']) &&  !empty($_POST['apel_pat']) && !empty($_POST['dni'])){
+        if(!empty($_POST['nombre']) && !empty($_POST['apel_mat'])
+            &&  !empty($_POST['apel_pat']) && !empty($_POST['dni'])
+            &&  !empty($_POST['puesto']) && !empty($_POST['telefono'])
+            &&  !empty($_POST['fecha_contratacion']) && !empty($_POST['edad'])
+        ){
+            /*
+
             $info = $_POST['fecha_contratacion '];
             echo "
                     <script>alert('feha: $info')</script>
                 ";
-			if(empty($_POST['puesto'])){
-                $_POST['puesto'] = null;
-            }
-            if(empty($_POST['telefono'])){
-                $_POST['telefono'] = null;
-            }
+            */
+			
 			if(empty($_POST['correo'])){
                 $_POST['correo'] = null;
             }
 			if(empty($_POST['direccion'])){
                 $_POST['direccion'] = null;
             }
-            if(empty($_POST['fecha_contratacion '])){
-                $_POST['fecha_contratacion '] = null;
-            }
-            if(empty($_POST['edad'])){
-                $_POST['edad'] = null;
-            }
-			if(empty($_POST['sueldo'])){
-                $_POST['sueldo'] = null;
+            if(empty($_POST['sueldo'])){
+                $_POST['sucursal_id'] = null;
             }
 			
 			
@@ -50,12 +46,12 @@ if(isset($_SESSION['Usuario'])){
             oci_bind_by_name($stid, ':telefono', $_POST['telefono']);
             oci_bind_by_name($stid, ':correo', $_POST['correo']);
 			oci_bind_by_name($stid, ':direccion', $_POST['direccion']);
-			oci_bind_by_name($stid, ':fecha_contratacion ', $_POST['fecha_contratacion ']);
+			oci_bind_by_name($stid, ':fecha_contratacion ', $_POST['fecha_contratacion']);
 			oci_bind_by_name($stid, ':edad', $_POST['edad']);
 			oci_bind_by_name($stid, ':sueldo', $_POST['sueldo']);
             oci_bind_by_name($stid, ':sucursal_id', $_POST['sucursal_id']);
-            
-            if(oci_execute($stid)){ // La fila se consolida y es visible inmediatamente a otros usuarios
+            $ejecuto = oci_execute($stid);
+            if($ejecuto){ // La fila se consolida y es visible inmediatamente a otros usuarios
                 echo "
                     <script>alert('se registró al trabajador')</script>
                 ";
@@ -66,7 +62,8 @@ if(isset($_SESSION['Usuario'])){
                 ";
             }
             
-    
+            oci_free_statement($stid);
+            oci_close($conn);
     
     
         }
@@ -168,7 +165,7 @@ if(isset($_SESSION['Usuario'])){
 				
 				<div class="form-group mt-4">
                   <label for="">Sueldo</label>
-                  <input type="number" class="form-control" name="sueldo" id="" aria-describedby="emailHelpId" placeholder="Sueldo">
+                  <input type="number" class="form-control" name="sueldo" id="" aria-describedby="emailHelpId" placeholder="Sueldo" min="0" step="0.01">
                   <small id="emailHelpId" class="form-text text-muted"></small>
                 </div> 
                 
@@ -178,12 +175,14 @@ if(isset($_SESSION['Usuario'])){
 
                 
 
-                $sql = "select categoria_id, nombre from $usuariomaster.categoria";
+                $sql = "select sucursal_id, pais, departamento, distrito from $usuariomaster.sucursal";
                 $stid = oci_parse($conn, $sql);
 
                 // Las definiciones DEBEN realizarse antes de la ejecución
-                oci_define_by_name($stid, 'sucursal_ID',$sucursal_id);
-                oci_define_by_name($stid, 'Pais',$sucursal_Pais);
+                oci_define_by_name($stid, 'SUCURSAL_ID', $sucursal_id);
+                oci_define_by_name($stid, 'PAIS', $sucursal_Pais);
+                oci_define_by_name($stid, 'DEPARTAMENTO', $departamento);
+                oci_define_by_name($stid, 'DISTRITO', $distrito);
                 
                 oci_execute($stid);
                 
@@ -193,7 +192,7 @@ if(isset($_SESSION['Usuario'])){
                 <select class="form-control" name="sucursal_id" id="">';
 
                 while (oci_fetch($stid)) {
-                    echo "<option  value='".$sucursal_id."'>".$sucursal_Pais."</option>";
+                    echo "<option  value='".$sucursal_id."'>".$sucursal_Pais." - ".$departamento." - ".$distrito."</option>";
                 }
                 echo '</select>
                 </div>';

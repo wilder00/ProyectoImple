@@ -203,7 +203,7 @@ if(isset($_SESSION['Usuario'])){//si ya esta logeado
 						<div class="input-group-prepend light">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
-						<input type="number" name="Id" class="form-control" placeholder="Id de trabajador" min="0">
+						<input type="number" name="Id" class="form-control" placeholder="Dni 	 de trabajador" min="0">
 						
 					</div>
 					<div class="input-group form-group">
@@ -214,7 +214,7 @@ if(isset($_SESSION['Usuario'])){//si ya esta logeado
 						
 					</div>
 					<div class="input-group form-group">
-						<div class="input-group-prepend">
+						<div class="input-group-prepend"> 
 							<span class="input-group-text"><i class="fas fa-key"></i></span>
 						</div>
 						<input type="password" name="Password" class="form-control" placeholder="Contraseña">
@@ -226,7 +226,7 @@ if(isset($_SESSION['Usuario'])){//si ya esta logeado
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					¿No tienes una cuenta?<a href="#">Registrate</a>
+					<!-- ¿No tienes una cuenta?<a href="#">Registrate</a> -->
 				</div>
 			</div>
 		</div>

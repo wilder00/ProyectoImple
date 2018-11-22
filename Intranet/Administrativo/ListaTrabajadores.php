@@ -1,17 +1,29 @@
 <?php
+session_start();
 
-$conexión = oci_connect('hr', 'welcome', 'localhost/XE');
-if (!$conexión) {
-    $m = oci_error();
-    trigger_error(htmlentities($m['message']), E_USER_ERROR);
+
+$mensaje = "";
+if(isset($_SESSION['Usuario'])){
+    if($_SESSION['tipo']=="Cajero"){
+        header('Location: ../Cajero/cajero.php');
+
+
+    }
+
+
+
 }
 
-$sql = 'SELECT * FROM Trabajador';
-$stid = oci_parse($conexión, $sql);
+require "../../oracle_conect.php";
+
+$sql = "SELECT * FROM $usuariomaster.Trabajador";
+$stid = oci_parse($conn, $sql);
+
 oci_execute($stid);
 
 
-$fila = oci_fetch_all($stid, $res);
+$fila = oci_fetch_all($stid, $res, null, null, OCI_FETCHSTATEMENT_BY_ROW);
+//var_dump($res);
  ?>
 
 
@@ -24,9 +36,10 @@ $fila = oci_fetch_all($stid, $res);
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lista de trabajadores</title>
     <link rel="stylesheet" href="../../css/cajero.css">
+    <?php include "../../bootstrap4/bootstrapCss.html"?>
 </head>
 <body>
-    <?php include 'cabecera.php' ?>
+    <?php include "../../cabecera.php"?>
     <h2>Lista de usuarios</h2>
 
     <table style="width:100%; border-collapse:collapse;" border="1">
@@ -43,28 +56,50 @@ $fila = oci_fetch_all($stid, $res);
         </tr>
     <?php if(count($fila) == 0) { ?>
         <tr>
-            <td colspan="5"
-            style="text-align:center;">No se encuentran usuarios registrados</td>
+            <td colspan="9"
+            style="text-align:center;">No se encuentran Trabajadores registrados</td>
         </tr>
-    <?php } ?>
+    <?php }else{
 
-    <?php foreach ($res as $u)  { ?>
-    <tr>
-        <td><?php echo $u["nombre"] ?> <?php echo $u["apel_mat"] ?><?php echo $u["apel_pat"] ?></td>
-		<td><?php echo $u["dni"] ?></td>
-		<td><?php echo $u["puesto"] ?></td>
-		<td><?php echo $u["telefono"] ?></td>
-        <td><?php echo $u["correo"] ?></td>
-        <td><?php echo $u["direccion"] ?></td>
-        <td><?php echo $u["fecha_contratacion"] ?></td>
-		<td><?php echo $u["edad"] ?></td>
-		<td><?php echo $u["sueldo"] ?></td>
-	</tr>
-	
-    <?php oci_free_statement($stid); } ?>
-    </table>
+            foreach ($res as $u)  { 
+                echo "<tr>";
+                echo "<td>".$u["NOMBRE"]." ".$u["APEL_MAT"]." ".$u["APEL_PAT"]."</td>\n";
+                echo "<td>".$u["DNI"]."</td>\n";
+                echo "<td>".$u["PUESTO"]."</td>\n";
+                echo "<td>".$u["TELEFONO"]."</td>\n";
+                echo "<td>".$u["CORREO"]."</td>\n";
+                echo "<td>".$u["DIRECCION"]."</td>\n";
+                echo "<td>".$u["FECHA_CONTRATACION"]."</td>\n";
+                echo "<td>".$u["EDAD"]."</td>\n";
+                echo "<td>".$u["SUELDO"]."</td>\n";
+                echo "</tr>";
+
+
+            } 
+
+        } 
     
-</body>
+    oci_free_statement($stid);
+    
+
+
+    /*
+        echo "<table border='1'>\n";
+        foreach ($res as $col) {
+            echo "<tr>\n";
+            foreach ($col as $item) {
+                echo "    <td>".($item !== null ? htmlentities($item, ENT_QUOTES) : "")."</td>\n";
+            }
+            echo "</tr>\n";
+        }
+        echo "</table>\n";
+
+    }*/
+    ?>
+    </table>
+    <?php include "../../bootstrap4/bootstrapjs.html"?>
+    <?php include "../../pie.php"?>
+    </body>
 </html>	
 		
 		
